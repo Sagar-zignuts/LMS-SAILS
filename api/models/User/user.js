@@ -13,18 +13,18 @@ module.exports = {
     },
     username: {
       type: "string",
-      require: true,
+      required: true,
       unique: true,
       maxLength: 20,
     },
     email: {
       type: "string",
-      require: true,
+      required: true,
       unique: true,
     },
     password: {
       type: "string",
-      require: true,
+      required: true,
     },
     role: { 
         type: "string", 
@@ -41,7 +41,7 @@ module.exports = {
 
   beforeCreate: async function (values, proceed) {
     const bcrypt = require("bcrypt");
-    values.password = await bcrypt.hash(values.proceed, 10);
+    values.password = await bcrypt.hash(values.password, 10);
     return proceed();
   },
 };

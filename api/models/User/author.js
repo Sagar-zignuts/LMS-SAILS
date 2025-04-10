@@ -7,7 +7,7 @@ module.exports = {
     attributes: {
       id: {
         type: "string",
-        require: true,
+        required: true,
         columnType: "uuid",
         unique: true,
         defaultsTo: () => require("uuid").v4(),
@@ -16,7 +16,7 @@ module.exports = {
       },
       name: {
         type: "string",
-        require: true,
+        required: true,
         maxLength: 100,
       },
       gender: {

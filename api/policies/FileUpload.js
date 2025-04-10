@@ -25,7 +25,7 @@ const upload = multer({
 module.exports = function(req, res, proceed) {
   upload(req, res, (err) => {
     if (err) {
-      return res.status(400).json({ message: err.message });
+      return res.status(400).json({ status : 400 , message: err.message });
     }
     // File is uploaded and available in req.file
     return proceed();

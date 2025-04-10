@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
-const { body, validationResult } = require("express-validator");
 require("dotenv").config();
 
 module.exports = {
-  AuthMiddleware: function (req, res, proceed) {
+  AuthMiddleware: async function (req, res, proceed) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -14,7 +13,7 @@ module.exports = {
     }
 
     try {
-      const decoder = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      const decoder = await jwt.verify(token, process.env.JWT_SECRET_KEY);
       req.user = decoder;
       return proceed();
     } catch (error) {
@@ -24,10 +23,12 @@ module.exports = {
     }
   },
 
-  restrictedToAdmin: function (req, res, proceed) {
-    if (req.user.role !== "admin") {
-      return res.status(403).json({ success: false, message: "Access denied" });
+  isAdmin : async function(req, res, proceed){
+    if (!req.user || req.user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ success: false, message: "Required admin login" });
     }
-    return proceed();
-  },
+    proceed();
+  } 
 };
