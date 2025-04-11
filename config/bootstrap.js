@@ -1,30 +1,31 @@
-/**
- * Seed Function
- * (sails.config.bootstrap)
- *
- * A function that runs just before your Sails app gets lifted.
- * > Need more flexibility?  You can also create a hook.
- *
- * For more information on seeding your app with fake data, check out:
- * https://sailsjs.com/config/bootstrap
- */
+// const bcrypt = require('bcrypt');
+// const {v4 : uuidV4} = require('uuid')
 
-module.exports.bootstrap = async function() {
+// module.exports.bootstrap = async function(done) {
+//   try {
+//     const adminEmail = process.env.ADMIN_EMAIL || 'admin123@example.com';
+//     const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+//     const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+//     const adminRole = 'admin';
 
-  // By convention, this is a good place to set up fake data during development.
-  //
-  // For example:
-  // ```
-  // // Set up fake development data (or if we already have some, avast)
-  // if (await User.count() > 0) {
-  //   return;
-  // }
-  //
-  // await User.createEach([
-  //   { emailAddress: 'ry@example.com', fullName: 'Ryan Dahl', },
-  //   { emailAddress: 'rachael@example.com', fullName: 'Rachael Shaw', },
-  //   // etc.
-  // ]);
-  // ```
+//     const existingAdmin = await sails.models.user.findOne({ email: adminEmail });
+//     if (!existingAdmin) {
+//       await User.create({
+//         id : uuidV4(),
+//         username: adminUsername,
+//         email: adminEmail,
+//         password: adminPassword,
+//         role: adminRole
+//       }).fetch();
 
-};
+//       sails.log.info('Admin user created successfully:', adminEmail);
+//     } else {
+//       sails.log.info('Admin user already exists:', adminEmail);
+//     }
+
+//     return done();
+//   } catch (error) {
+//     sails.log.error('Error during bootstrap:', error.message);
+//     return done(error);
+//   }
+// };

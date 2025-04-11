@@ -1,6 +1,8 @@
+const {v4 : uuidV4} = require('uuid')
+
 module.exports = {
-  models: false,
   migrate: "alter",
+  // migrate : 'drop',
   tableName: "books",
 
   attributes: {
@@ -8,8 +10,7 @@ module.exports = {
       type: "string",
       columnType: "uuid",
       unique: true,
-      required: true,
-      defaultsTo: () => require("uuid").v4(),
+      required : true
     },
     title: {
       type: "string",
@@ -27,20 +28,20 @@ module.exports = {
       columnType: "date",
       required: true,
     },
-    cover_image: {
+    coverImage: {
       type: "string",
       maxLength: 255,
       allowNull: true,
     },
     author_id: {
-      model: "author",
+      model: "Author",
       required: true,
-    },
-    created_at: {
-      type: "ref",
-      columnType: "timestamp",
-      defaultsTo: () => new Date(),
-    },
+    }
+  },
+
+  beforeCreate : async function(values , proceed){
+    values.id = uuidV4()
+    return proceed()
   },
 
   primaryKey: "id",

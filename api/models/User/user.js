@@ -1,15 +1,17 @@
+const bcrypt = require("bcrypt");
+const {v4 : uuidV4} = require('uuid')
+
 module.exports = {
   tableName: "users",
   migrate: "alter",
-  models: false,
+  // migrate : 'drop',
 
   attributes: {
     id: {
       type: "string",
       columnType: "uuid",
       unique: true,
-      required: true,
-      defaultsTo: () => require("uuid").v4(),
+      required : true
     },
     username: {
       type: "string",
@@ -29,18 +31,14 @@ module.exports = {
     role: { 
         type: "string", 
         defaultsTo: "user" 
-    },
-    created_at: {
-      type: "ref",
-      columnType: "timestamp",
-      defaultsTo: () => new Date(),
-    },
+    }
   },
 
   primaryKey: "id",
 
   beforeCreate: async function (values, proceed) {
-    const bcrypt = require("bcrypt");
+
+    values.id = uuidV4();
     values.password = await bcrypt.hash(values.password, 10);
     return proceed();
   },

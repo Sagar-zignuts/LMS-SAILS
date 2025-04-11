@@ -1,18 +1,18 @@
+const {v4 : uuidV4} = require('uuid')
+
+
 module.exports = {
-    models: false, // Turn off global models (like Todo, User)
     migrate : 'alter',
+    // migrate : 'drop',
     tableName: 'authors',
     
   
     attributes: {
       id: {
         type: "string",
-        required: true,
         columnType: "uuid",
         unique: true,
-        defaultsTo: () => require("uuid").v4(),
-        autoCreatedAt: false,
-        autoUpdatedAt: false,
+        required : true
       },
       name: {
         type: "string",
@@ -24,18 +24,19 @@ module.exports = {
         allowNull: true,
         maxLength: 20,
       },
-      profile: {
+      profileImage: {
         type: "string",
         allowNull: true,
-      },
-      createdAt: {
-        type: "ref",
-        columnType: "timestamp",
-        defaultsTo: () => new Date(),
-      },
+      }
     },
   
     primaryKey: "id",
+
+  beforeCreate : async function(values , proceed){
+    values.id = uuidV4()
+    return proceed()
+  },
+
   };
   
   
